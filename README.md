@@ -7,3 +7,5 @@
 ###MeasurementTest Class
 ###RecipeIngredient Class
 ###RecipeIngredientTest Class
+###RecipeCategory Class
+###RecipeCategoryTest Class
