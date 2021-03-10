@@ -9,3 +9,5 @@
 ###RecipeIngredientTest Class
 ###RecipeCategory Class
 ###RecipeCategoryTest Class
+###Recipe Class
+###RecipeTest Class

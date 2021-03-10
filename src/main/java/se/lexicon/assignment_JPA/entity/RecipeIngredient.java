@@ -11,7 +11,7 @@ public class RecipeIngredient {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name ="UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    private String id;
     private Ingredient ingredient;
     private double measuredAmount;
     private Measurement measurementUnit;
@@ -27,7 +27,7 @@ public class RecipeIngredient {
         this.recipe = recipe;
     }
 
-    public RecipeIngredient(UUID id, Ingredient ingredient, double measuredAmount, Measurement measurementUnit, Recipe recipe) {
+    public RecipeIngredient(String id, Ingredient ingredient, double measuredAmount, Measurement measurementUnit, Recipe recipe) {
         this.id = id;
         this.ingredient = ingredient;
         this.measuredAmount = measuredAmount;
@@ -35,11 +35,11 @@ public class RecipeIngredient {
         this.recipe = recipe;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

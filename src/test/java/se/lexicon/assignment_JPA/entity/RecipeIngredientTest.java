@@ -11,12 +11,12 @@ public class RecipeIngredientTest {
     RecipeIngredient testObject;
     Ingredient testIngredient;
     Measurement testMeasurement;
-    UUID testUUID;
+    String testUUID;
 
     @BeforeEach
     public void setup(){
         testIngredient = new Ingredient(1, "Milk");
-        testUUID = UUID.randomUUID();
+        testUUID = String.valueOf(UUID.randomUUID());
         testMeasurement = Measurement.KG;
         testObject = new RecipeIngredient(testUUID, testIngredient,10.7, testMeasurement,null);
 
@@ -26,8 +26,8 @@ public class RecipeIngredientTest {
     @Test
     @DisplayName("Test - UUID")
     public void test_UUID(){
-        UUID expectedId = testUUID;
-        UUID actualId = testObject.getId();
+        String expectedId = testUUID;
+        String actualId = testObject.getId();
 
         Assertions.assertEquals(expectedId, actualId);
     }
