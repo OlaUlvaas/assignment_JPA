@@ -11,3 +11,5 @@
 ###RecipeCategoryTest Class
 ###Recipe Class
 ###RecipeTest Class
+###RecipeInstruction Class
+###RecipeInstructionTest Class
