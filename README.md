@@ -16,3 +16,8 @@
 
 ###EntitiesAndRelations
 ###ConnectingWithDataBase
+
+###IngredientRepository
+###IngredientRepositoryTest
+
+
