@@ -1,13 +1,21 @@
 package se.lexicon.assignment_JPA.entity;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-
+@Entity
 public class RecipeCategory {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false,length = 50)
     private String category;
+    @ManyToMany
+    @JoinTable(name = "recipe_recipe_category"
+            , joinColumns = @JoinColumn(name = "recipe_category_id")
+            , inverseJoinColumns = @JoinColumn(name = "recipe_id")
+    )
     private List<Recipe> recipes;
 
 

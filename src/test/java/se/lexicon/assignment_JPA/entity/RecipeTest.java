@@ -114,7 +114,7 @@ public class RecipeTest {
     @DisplayName("Test - SizeOfRecipeIngredientArrayList")
     public void test_size_of_recipe_ingredient_arrayList(){
         int expectedSizeOfRecipeIngredientArrayList = 5;
-        int actualSizeOfRecipeIngredientArrayList = testObject.getRecipeIngredient().size();
+        int actualSizeOfRecipeIngredientArrayList = testObject.getRecipeIngredientCollection().size();
         Assertions.assertEquals(expectedSizeOfRecipeIngredientArrayList, actualSizeOfRecipeIngredientArrayList);
     }
 

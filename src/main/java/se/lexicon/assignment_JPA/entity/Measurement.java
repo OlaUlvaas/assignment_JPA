@@ -1,5 +1,7 @@
 package se.lexicon.assignment_JPA.entity;
 
+import javax.persistence.Entity;
+
 public enum Measurement {
     L(1), DL(2), CL(3), ML(4), KG(5), HG(6), G(7), MG(8), TSK(9), MSK(10);
 

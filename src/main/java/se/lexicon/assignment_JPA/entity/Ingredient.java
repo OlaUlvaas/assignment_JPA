@@ -1,10 +1,14 @@
 package se.lexicon.assignment_JPA.entity;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-
+@Entity
 public class Ingredient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    //unique
+    @Column(nullable = false,length = 50,unique = true)
     private String ingredient;
 
     public Ingredient() {

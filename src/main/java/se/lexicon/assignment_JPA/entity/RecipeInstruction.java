@@ -2,16 +2,16 @@ package se.lexicon.assignment_JPA.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
-
+@Entity
 public class RecipeInstruction {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name ="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+    @Column(nullable = false,length = 50)
     private String recipeInstructions;
 
     public RecipeInstruction() {

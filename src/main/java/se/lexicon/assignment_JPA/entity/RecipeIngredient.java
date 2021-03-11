@@ -2,19 +2,23 @@ package se.lexicon.assignment_JPA.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
-
+@Entity
 public class RecipeIngredient {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name ="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinColumn(table = "recipe_ingredient", name = "ingredient_id")
     private Ingredient ingredient;
+    @Column(nullable = false)
     private double measuredAmount;
     private Measurement measurementUnit;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
     public RecipeIngredient() {

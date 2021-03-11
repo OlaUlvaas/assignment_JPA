@@ -1,14 +1,26 @@
 package se.lexicon.assignment_JPA.entity;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
-
+@Entity
 public class Recipe {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false,length = 50)
     private String recipeName;
-    private List<RecipeIngredient> recipeIngredient;
+    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "recipe_ingredient_id")
+    private List<RecipeIngredient> recipeIngredientCollection;
+    @OneToOne
+    @JoinColumn(name = "recipe_intruction_id")
     private RecipeInstruction recipeInstruction;
+    @ManyToMany
+    @JoinTable(name = "recipe_recipe_category"
+            , joinColumns = @JoinColumn(name = "recipe_id")
+            , inverseJoinColumns = @JoinColumn(name = "recipe_category_id")
+    )
     private List<RecipeCategory> recipeCategories;
 
     //Contains an id of type int.
@@ -26,17 +38,17 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(String recipeName, List<RecipeIngredient> recipeIngredient, RecipeInstruction recipeInstruction, List<RecipeCategory> recipeCategories) {
+    public Recipe(String recipeName, List<RecipeIngredient> recipeIngredientCollection, RecipeInstruction recipeInstruction, List<RecipeCategory> recipeCategories) {
         this.recipeName = recipeName;
-        this.recipeIngredient = recipeIngredient;
+        this.recipeIngredientCollection = recipeIngredientCollection;
         this.recipeInstruction = recipeInstruction;
         this.recipeCategories = recipeCategories;
     }
 
-    public Recipe(int id, String recipeName, List<RecipeIngredient> recipeIngredient, RecipeInstruction recipeInstruction, List<RecipeCategory> recipeCategories) {
+    public Recipe(int id, String recipeName, List<RecipeIngredient> recipeIngredientCollection, RecipeInstruction recipeInstruction, List<RecipeCategory> recipeCategories) {
         this.id = id;
         this.recipeName = recipeName;
-        this.recipeIngredient = recipeIngredient;
+        this.recipeIngredientCollection = recipeIngredientCollection;
         this.recipeInstruction = recipeInstruction;
         this.recipeCategories = recipeCategories;
     }
@@ -57,12 +69,12 @@ public class Recipe {
         this.recipeName = recipeName;
     }
 
-    public List<RecipeIngredient> getRecipeIngredient() {
-        return recipeIngredient;
+    public List<RecipeIngredient> getRecipeIngredientCollection() {
+        return recipeIngredientCollection;
     }
 
-    public void setRecipeIngredient(List<RecipeIngredient> recipeIngredient) {
-        this.recipeIngredient = recipeIngredient;
+    public void setRecipeIngredientCollection(List<RecipeIngredient> recipeIngredient) {
+        this.recipeIngredientCollection = recipeIngredient;
     }
 
     public RecipeInstruction getRecipeInstruction() {
@@ -86,12 +98,12 @@ public class Recipe {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Recipe recipe = (Recipe) o;
-        return id == recipe.id && Objects.equals(recipeName, recipe.recipeName) && Objects.equals(recipeIngredient, recipe.recipeIngredient) && Objects.equals(recipeInstruction, recipe.recipeInstruction) && Objects.equals(recipeCategories, recipe.recipeCategories);
+        return id == recipe.id && Objects.equals(recipeName, recipe.recipeName) && Objects.equals(recipeIngredientCollection, recipe.recipeIngredientCollection) && Objects.equals(recipeInstruction, recipe.recipeInstruction) && Objects.equals(recipeCategories, recipe.recipeCategories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, recipeName, recipeIngredient, recipeInstruction, recipeCategories);
+        return Objects.hash(id, recipeName, recipeIngredientCollection, recipeInstruction, recipeCategories);
     }
 
     @Override
@@ -99,7 +111,7 @@ public class Recipe {
         return "Recipe{" +
                 "id=" + id +
                 ", recipeName='" + recipeName + '\'' +
-                ", recipeIngredient=" + recipeIngredient +
+                ", recipeIngredient=" + recipeIngredientCollection +
                 ", recipeInstruction=" + recipeInstruction +
                 ", recipeCategories=" + recipeCategories +
                 '}';
