@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import se.lexicon.assignment_JPA.entity.Ingredient;
 
+import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
 public class IngredientRepositoryTest {
-    @Autowired
 
+    @Autowired
     IngredientRepository testObject;
+
     Ingredient ingredient;
 
     @BeforeEach
@@ -24,38 +26,32 @@ public class IngredientRepositoryTest {
     }
 
     @Test
-    @DisplayName("Test - isPresent")
-    public void find_ingredient_by_ingredient_is_present(){
-        Optional<Ingredient> findIngredient = testObject.findIngredientByIngredient("Vetemjöl");
-        Assertions.assertTrue(findIngredient.isPresent());
+    @DisplayName("Test - findId")
+    public void test1(){
+        int expectecId = 1;
+        int actualId = testObject.findIngredientByIngredient("Vetemjöl").get(0).getId();
+        Assertions.assertEquals(expectecId, actualId);
 
-        System.out.println("----------------------------------");
-        System.out.println("findIngredient.toString() = " + findIngredient.toString());
+
+
     }
 
     @Test
-    @DisplayName("Test - EqualsIngredientName")
-    public void find_ingredient_by_ingredient_equals_ingredient_name(){
-        Optional<Ingredient> findIngredient = testObject.findIngredientByIngredient("Vetemjöl");
-        Assertions.assertTrue(findIngredient.isPresent());
-        String expectedIngredientName = "Vetemjöl";
-        String actualIngredientName = findIngredient.get().getIngredient();
-        Assertions.assertEquals(expectedIngredientName, actualIngredientName);
+    @DisplayName("Test - findIngredient")
+    public void test2(){
+        String expectectedIngredient = "Vetemjöl";
+        String actualIngredient= testObject.findIngredientByIngredient("Vetemjöl").get(0).getIngredient();
+        Assertions.assertEquals(expectectedIngredient, actualIngredient);
 
-        System.out.println("----------------------------------");
-        System.out.println("findIngredient.toString() = " + findIngredient.toString());
     }
 
     @Test
-    @DisplayName("Test - EqualIngredientId")
-    public void find_ingredient_by_ingredient_equals_id(){
-        Optional<Ingredient> findIngredient = testObject.findIngredientByIngredient("Vetemjöl");
-        Assertions.assertTrue(findIngredient.isPresent());
-        int expectedIngredientId = 1;
-        int actualIngredientId = findIngredient.get().getId();
-        Assertions.assertEquals(expectedIngredientId, actualIngredientId);
+    @DisplayName("Test - findIngredientsByIngredientContains()")
+    public void test3(){
+        String expectectedContains = "Vetemjöl";
+        String actualContains= testObject.findIngredientsByIngredientContains("mjö").get(0).getIngredient();
+        Assertions.assertEquals(expectectedContains, actualContains);
 
-        System.out.println("----------------------------------");
-        System.out.println("findIngredient = " + findIngredient);
     }
+
 }

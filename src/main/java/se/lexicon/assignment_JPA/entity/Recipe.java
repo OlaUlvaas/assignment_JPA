@@ -8,47 +8,35 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false,length = 50)
     private String recipeName;
     @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "recipe_ingredient_id")
-    private List<RecipeIngredient> recipeIngredientCollection;
-    @OneToOne
+    private List<RecipeIngredient> recipeIngredients;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "recipe_intruction_id")
     private RecipeInstruction recipeInstruction;
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "recipe_recipe_category"
             , joinColumns = @JoinColumn(name = "recipe_id")
             , inverseJoinColumns = @JoinColumn(name = "recipe_category_id")
     )
     private List<RecipeCategory> recipeCategories;
 
-    //Contains an id of type int.
-    //Contains a recipe name of type String.
-    //Contains a collection of recipeingredients.When you remove content from this
-    //collection make sure to implement automagical removal of this
-    //RecipeIngredient
-    //Contains recipe instructions of type RecipeInstruction
-    //Contains a collection of RecipeCategory
-    //""""recipeIngredient""""
-    //When you remove content from this collection make sure
-    //to implement automagical removal of this RecipeIngredient. (OHRF.....something)
-
 
     public Recipe() {
     }
 
-    public Recipe(String recipeName, List<RecipeIngredient> recipeIngredientCollection, RecipeInstruction recipeInstruction, List<RecipeCategory> recipeCategories) {
+    public Recipe(String recipeName, List<RecipeIngredient> recipeIngredients, RecipeInstruction recipeInstruction, List<RecipeCategory> recipeCategories) {
         this.recipeName = recipeName;
-        this.recipeIngredientCollection = recipeIngredientCollection;
+        this.recipeIngredients = recipeIngredients;
         this.recipeInstruction = recipeInstruction;
         this.recipeCategories = recipeCategories;
     }
 
-    public Recipe(int id, String recipeName, List<RecipeIngredient> recipeIngredientCollection, RecipeInstruction recipeInstruction, List<RecipeCategory> recipeCategories) {
+    public Recipe(int id, String recipeName, List<RecipeIngredient> recipeIngredients, RecipeInstruction recipeInstruction, List<RecipeCategory> recipeCategories) {
         this.id = id;
         this.recipeName = recipeName;
-        this.recipeIngredientCollection = recipeIngredientCollection;
+        this.recipeIngredients = recipeIngredients;
         this.recipeInstruction = recipeInstruction;
         this.recipeCategories = recipeCategories;
     }
@@ -69,12 +57,12 @@ public class Recipe {
         this.recipeName = recipeName;
     }
 
-    public List<RecipeIngredient> getRecipeIngredientCollection() {
-        return recipeIngredientCollection;
+    public List<RecipeIngredient> getRecipeIngredients() {
+        return recipeIngredients;
     }
 
-    public void setRecipeIngredientCollection(List<RecipeIngredient> recipeIngredient) {
-        this.recipeIngredientCollection = recipeIngredient;
+    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredient) {
+        this.recipeIngredients = recipeIngredient;
     }
 
     public RecipeInstruction getRecipeInstruction() {
@@ -98,12 +86,12 @@ public class Recipe {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Recipe recipe = (Recipe) o;
-        return id == recipe.id && Objects.equals(recipeName, recipe.recipeName) && Objects.equals(recipeIngredientCollection, recipe.recipeIngredientCollection) && Objects.equals(recipeInstruction, recipe.recipeInstruction) && Objects.equals(recipeCategories, recipe.recipeCategories);
+        return id == recipe.id && Objects.equals(recipeName, recipe.recipeName) && Objects.equals(recipeIngredients, recipe.recipeIngredients) && Objects.equals(recipeInstruction, recipe.recipeInstruction) && Objects.equals(recipeCategories, recipe.recipeCategories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, recipeName, recipeIngredientCollection, recipeInstruction, recipeCategories);
+        return Objects.hash(id, recipeName, recipeIngredients, recipeInstruction, recipeCategories);
     }
 
     @Override
@@ -111,7 +99,7 @@ public class Recipe {
         return "Recipe{" +
                 "id=" + id +
                 ", recipeName='" + recipeName + '\'' +
-                ", recipeIngredient=" + recipeIngredientCollection +
+                ", recipeIngredient=" + recipeIngredients +
                 ", recipeInstruction=" + recipeInstruction +
                 ", recipeCategories=" + recipeCategories +
                 '}';

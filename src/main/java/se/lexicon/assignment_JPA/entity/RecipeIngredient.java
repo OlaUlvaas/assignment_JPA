@@ -1,23 +1,26 @@
 package se.lexicon.assignment_JPA.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
-import java.util.UUID;
+import java.util.Objects;
+
 @Entity
 public class RecipeIngredient {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name ="UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
     private String id;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinColumn(table = "recipe_ingredient", name = "ingredient_id")
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
-    @Column(nullable = false)
+
     private double measuredAmount;
     private Measurement measurementUnit;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
@@ -78,4 +81,29 @@ public class RecipeIngredient {
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecipeIngredient that = (RecipeIngredient) o;
+        return Double.compare(that.measuredAmount, measuredAmount) == 0 && Objects.equals(id, that.id) && Objects.equals(ingredient, that.ingredient) && measurementUnit == that.measurementUnit && Objects.equals(recipe, that.recipe);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, ingredient, measuredAmount, measurementUnit, recipe);
+    }
+
+    @Override
+    public String toString() {
+        return "RecipeIngredient{" +
+                "id='" + id + '\'' +
+                ", ingredient=" + ingredient +
+                ", measuredAmount=" + measuredAmount +
+                ", measurementUnit=" + measurementUnit +
+                ", recipe=" + recipe +
+                '}';
+    }
 }
+
